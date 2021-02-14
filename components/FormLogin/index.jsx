@@ -1,4 +1,6 @@
 import Head from "next/head";
+import Link from "next/link";
+
 import React, { useState } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import Error from "components/Error";
@@ -36,7 +38,7 @@ const FormLogin = () => {
     <>
       <Container>
         <div className="entry-title">
-          <h3>Login</h3>
+          <h3>Sign In</h3>
         </div>
 
         {error ? <Error message="Este es el mensaje de Error" /> : null}
@@ -65,7 +67,23 @@ const FormLogin = () => {
             Submit
           </Button>
         </Form>
+        <br />
+        <div className="center">
+          <h6>
+            Create new account
+            <Link href="/Entry/Register">
+              <a> Here</a>
+            </Link>
+          </h6>
+        </div>
       </Container>
+
+      <style jsx>{`
+        .center {
+          display: flex;
+          justify-content: center;
+        }
+      `}</style>
     </>
   );
 };

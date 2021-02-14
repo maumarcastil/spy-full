@@ -1,10 +1,21 @@
-import Head from "next/head";
 import Header from "components/Header";
+import React, { useState, useEffect } from "react";
+import { recoverySignIn } from "firebase/client";
 
 export default function Home() {
+  //el usuario
+  //undefined = indefinido
+  //false = no hay
+  //true = hay usuario
+  const [user, setUser] = useState(undefined);
+
+  useEffect(() => {
+    recoverySignIn(setUser);
+  }, []);
+
   return (
     <>
-      <Header />
+      <Header user={user} />
       <div className="container">
         <h1>About</h1>
         <p>
@@ -31,11 +42,11 @@ export default function Home() {
       </div>
 
       <style jsx>{`
-        .container{
+        .container {
           background-color: #fff;
           height: 100vh;
         }
-        `}</style>
+      `}</style>
     </>
   );
 }

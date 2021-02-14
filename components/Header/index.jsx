@@ -7,9 +7,10 @@ import {
   Form,
   FormControl,
   Button,
+  Spinner,
 } from "react-bootstrap";
 
-const Header = () => {
+const Header = ({ user }) => {
   return (
     <>
       <Navbar bg="light" expand="sm">
@@ -17,10 +18,19 @@ const Header = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
           <Nav>
-              <a href="/">Home</a>
-            <Link href="/Entry">
-              <a>Login</a>
-            </Link>
+            {user === undefined ? (
+              <Spinner animation="border" variant="dark" size="sm" />
+            ) : null}
+            {user ? (
+              <Link href="/Home">
+                <a>Manage</a>
+              </Link>
+            ) : null}
+            {user === false ? (
+              <Link href="/Entry/SignIn">
+                <a>Sing In</a>
+              </Link>
+            ) : null}
           </Nav>
         </Navbar.Collapse>
       </Navbar>
