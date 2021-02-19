@@ -1,18 +1,21 @@
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import React, { useState } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import Error from "components/Error";
+
+import { enterUser } from "firebase/client";
 
 const FormLogin = () => {
   const [dataLogin, setDataLogin] = useState({
     email: "",
     password: "",
   });
-
+  const [user, setUser] = useState(undefined);
   const [error, setError] = useState(false);
-
+  const router = useRouter();
   const { email, password } = dataLogin;
 
   const handleChange = (e) => {
@@ -24,14 +27,24 @@ const FormLogin = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Enviando info");
-
     /* Validamos */
     if (email.trim() === "" || password.trim() === "") {
       setError(true);
-    } else {
-      setError(false);
+      return;
     }
+    setError(false);
+
+    enterUser(email, password, setUser, setError);
+
+    if (user) {
+      router.replace("/Home");
+    }
+
+    /* Limpiamos campos */
+    setDataLogin({
+      email: "",
+      password: "",
+    });
   };
 
   return (
@@ -41,7 +54,7 @@ const FormLogin = () => {
           <h3>Sign In</h3>
         </div>
 
-        {error ? <Error message="Este es el mensaje de Error" /> : null}
+        {error ? <Error message={error} /> : null}
 
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formBasicEmail">
@@ -51,6 +64,7 @@ const FormLogin = () => {
               placeholder="Enter email"
               name="email"
               onChange={handleChange}
+              value={email}
             />
           </Form.Group>
 
@@ -61,6 +75,7 @@ const FormLogin = () => {
               placeholder="Password"
               name="password"
               onChange={handleChange}
+              value={password}
             />
           </Form.Group>
           <Button variant="primary" type="submit" block>

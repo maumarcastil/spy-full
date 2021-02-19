@@ -41,3 +41,29 @@ export const createUser = (email, password, setUser, setError) => {
 };
 
 //Iniciar Session
+export const enterUser = (email, password, setUser, setError) => {
+  return firebase
+    .auth()
+    .signInWithEmailAndPassword(email, password)
+    .then((user) => {
+      setUser(user);
+    })
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      setError(errorMessage);
+    });
+};
+
+//Logout
+export const logout = (setUser) => {
+  return firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      setUser(false);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};

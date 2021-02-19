@@ -18,8 +18,9 @@ const Register = () => {
   }, []);
 
   useEffect(() => {
+    user === false && setSpinner(false);
     user && router.replace("/Home");
-  }, [user]);
+  }, [user, spinner]);
 
   return (
     <>
