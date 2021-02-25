@@ -13,6 +13,7 @@
     "@zeit/next-sass": "^1.0.1",
     "bootstrap": "^4.6.0",
     "firebase": "^8.2.7",
+    "mongoose": "^5.11.18",
     "next": "10.0.5",
     "next-images": "^1.7.0",
     "react": "17.0.1",
